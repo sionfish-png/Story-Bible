@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useBook } from '../BookContext';
@@ -8,7 +9,15 @@ import {
   Lightbulb,
   ChevronDown,
   Home,
+  FileDown,
 } from 'lucide-react';
+import { exportToPDF } from '../utils/pdfExport';
+import {
+  getEntitiesByBook,
+  getRelationshipsByBook,
+  getTimelineEventsByBook,
+  getChaptersByBook,
+} from '../db';
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,10 +27,40 @@ export default function Layout({ children }: LayoutProps) {
   const { currentBook, setCurrentBook } = useBook();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isExporting, setIsExporting] = useState(false);
 
   function handleChangeBook() {
     setCurrentBook(null);
     navigate('/');
+  }
+
+  async function handleExportPDF() {
+    if (!currentBook) return;
+
+    setIsExporting(true);
+    try {
+      // Gather all data
+      const [entities, relationships, timelineEvents, chapters] = await Promise.all([
+        getEntitiesByBook(currentBook.id),
+        getRelationshipsByBook(currentBook.id),
+        getTimelineEventsByBook(currentBook.id),
+        getChaptersByBook(currentBook.id),
+      ]);
+
+      // Export to PDF
+      await exportToPDF({
+        book: currentBook,
+        entities,
+        relationships,
+        timelineEvents,
+        chapters,
+      });
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+      alert('Failed to export PDF. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
   }
 
   const navItems = [
@@ -75,7 +114,15 @@ export default function Layout({ children }: LayoutProps) {
           </ul>
         </nav>
 
-        <div className="p-4 border-t border-purple-500">
+        <div className="p-4 border-t border-purple-500 space-y-2">
+          <button
+            onClick={handleExportPDF}
+            disabled={isExporting}
+            className="w-full px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-md transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <FileDown className="w-4 h-4 mr-2" />
+            {isExporting ? 'Exporting...' : 'Export to PDF'}
+          </button>
           <button
             onClick={handleChangeBook}
             className="w-full px-4 py-2 text-purple-200 hover:bg-purple-700/50 rounded-md transition-colors flex items-center"

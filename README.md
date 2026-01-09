@@ -48,7 +48,14 @@ A comprehensive novel planning application built with React, TypeScript, and Vit
 - Drag and arrange elements freely
 - Perfect for mapping out complex relationships and plot connections
 
-### 6. Data Persistence
+### 6. PDF Export
+- Export your entire story bible to a professional PDF
+- Includes clickable table of contents for easy navigation
+- Internal hyperlinks between sections
+- Comprehensive document with all entities, timeline, chapters, and relationships
+- Perfect for sharing with editors, beta readers, or for backup purposes
+
+### 7. Data Persistence
 - All data stored locally in your browser using IndexedDB
 - No server required - complete privacy
 - Automatic saving as you work
@@ -130,6 +137,18 @@ The built files will be in the `dist` directory.
 5. Click and drag from one node's edge to another to create connections
 6. Select a color before adding notes to change their appearance
 
+### Exporting to PDF
+
+1. Click "Export to PDF" in the sidebar (bottom section)
+2. The PDF will be automatically generated and downloaded
+3. The PDF includes:
+   - Cover page with book information
+   - Clickable table of contents
+   - All entities with notes and relationships
+   - Complete timeline with all storylines
+   - All chapters with scenes
+   - Internal hyperlinks for easy navigation
+
 ### Managing Multiple Books
 
 1. Click "Change Book" in the sidebar
@@ -147,6 +166,7 @@ The built files will be in the `dist` directory.
 - **React Router** - Navigation
 - **ReactFlow** - Brainstorm board visualization
 - **idb** - IndexedDB wrapper for data persistence
+- **pdfmake** - PDF generation with hyperlinks and table of contents
 - **Lucide React** - Icons
 
 ### Data Storage

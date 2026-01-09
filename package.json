@@ -12,6 +12,7 @@
   "dependencies": {
     "idb": "^8.0.3",
     "lucide-react": "^0.562.0",
+    "pdfmake": "^0.3.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.12.0",
@@ -21,6 +22,7 @@
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^24.10.1",
+    "@types/pdfmake": "^0.2.12",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
